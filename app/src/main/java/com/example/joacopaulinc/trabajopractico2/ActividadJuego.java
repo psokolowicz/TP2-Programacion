@@ -76,7 +76,6 @@ public class ActividadJuego extends AppCompatActivity {
 
     public void GanaPorMi(View vista)
     {
-        //no anda cuando
             int verdaderos = 0;
 
             for(int i = 0; i <= ArrImagen.length-1; i++)
@@ -88,7 +87,6 @@ public class ActividadJuego extends AppCompatActivity {
             }
             while (!Gano())
             {
-
                 if (verdaderos<=4)
                 {
                     int[] posMenor = new int[verdaderos];
@@ -96,7 +94,7 @@ public class ActividadJuego extends AppCompatActivity {
                     {
                         for (int y = 0; y <= ArrImagen.length - 1; y++)
                         {
-                            if (ArrImagen[y] && YaEsta(posMenor, y))
+                            if (ArrImagen[y] == true && YaEsta(posMenor, y) == false)
                             {
                                 posMenor[f] = y;
                                 y = ArrImagen.length - 1;
@@ -109,6 +107,14 @@ public class ActividadJuego extends AppCompatActivity {
                         InvertirCostados(posMenor[u]);
                     }
 
+                    verdaderos = 0;
+                    for(int i = 0; i <= ArrImagen.length-1; i++)
+                    {
+                        if (ArrImagen[i] == true)
+                        {
+                            verdaderos++;
+                        }
+                    }
                 }
                 else
                 {
@@ -117,7 +123,7 @@ public class ActividadJuego extends AppCompatActivity {
                     {
                         for (int y = 0; y <= ArrImagen.length - 1; y++)
                         {
-                            if (ArrImagen[y] == false)
+                            if (ArrImagen[y] == false && YaEsta(posMenor, y) == false)
                             {
                                 posMenor[f] = y;
                                 y = ArrImagen.length - 1;
@@ -125,9 +131,18 @@ public class ActividadJuego extends AppCompatActivity {
                         }
                     }
 
-                    for (int u = 0; u <= verdaderos - 1; u++)
+                    for (int u = 0; u <= posMenor.length - 1; u++)
                     {
                         InvertirCostados(posMenor[u]);
+                    }
+
+                    verdaderos = 0;
+                    for(int i = 0; i <= ArrImagen.length-1; i++)
+                    {
+                        if (ArrImagen[i] == true)
+                        {
+                            verdaderos++;
+                        }
                     }
                 }
             }
