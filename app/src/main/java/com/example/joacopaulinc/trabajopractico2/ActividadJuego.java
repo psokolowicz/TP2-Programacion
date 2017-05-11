@@ -3,6 +3,7 @@ package com.example.joacopaulinc.trabajopractico2;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.WindowDecorActionBar;
 import android.text.BoringLayout;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +13,8 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ActividadJuego extends AppCompatActivity {
 
@@ -22,7 +25,7 @@ public class ActividadJuego extends AppCompatActivity {
     String Ganador;
     int trues;
     int falses;
-
+    int[] posMenor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("ActJue", "");
@@ -89,7 +92,7 @@ public class ActividadJuego extends AppCompatActivity {
             {
                 if (verdaderos<=4)
                 {
-                    int[] posMenor = new int[verdaderos];
+                    posMenor = new int[verdaderos];
                     for (int f = 0; f <= verdaderos - 1; f++)
                     {
                         for (int y = 0; y <= ArrImagen.length - 1; y++)
@@ -131,11 +134,36 @@ public class ActividadJuego extends AppCompatActivity {
                         }
                     }
 
-                    for (int u = 0; u <= posMenor.length - 1; u++)
-                    {
-                        InvertirCostados(posMenor[u]);
-                    }
 
+                    final int PosicionMenorArray=posMenor.length;
+
+
+                    final Timer MiReloj;
+                    MiReloj = new Timer();
+
+                    for (int u = 0; u <= PosicionMenorArray - 1; u++) {
+
+                        final int pos = posMenor[u];
+
+                        TimerTask MiTareaARepetir;
+                        MiTareaARepetir = new TimerTask() {
+                            @Override
+                            public void run() {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+
+                                        {
+                                            InvertirCostados(pos);
+                                        }
+                                    }
+                                });
+                            }
+                        };
+
+                        MiReloj.schedule(MiTareaARepetir, 0, 1500);
+
+                    }
                     verdaderos = 0;
                     for(int i = 0; i <= ArrImagen.length-1; i++)
                     {
