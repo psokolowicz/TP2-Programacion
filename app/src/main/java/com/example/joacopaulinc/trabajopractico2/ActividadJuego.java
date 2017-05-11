@@ -3,10 +3,12 @@ package com.example.joacopaulinc.trabajopractico2;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.BoringLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -60,43 +62,78 @@ public class ActividadJuego extends AppCompatActivity {
 
     }
 
+    public boolean YaEsta(int[] Array, int pos)
+    {
+        for (int r = 0; r <= Array.length - 1; r++)
+        {
+            if (Array[r] == pos)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void GanaPorMi(View vista)
     {
         //no anda cuando
-        while(!Gano())
-        {
-            List<Integer> posFalses = new ArrayList<Integer>();
-            List<Integer> posTrues = new ArrayList<Integer>();
+            int verdaderos = 0;
 
-            for (int i = 0; i <= 8; i++)
+            for(int i = 0; i <= ArrImagen.length-1; i++)
             {
-                if (!ArrImagen[i])
+                if (ArrImagen[i])
                 {
-                    posFalses.add(i);
+                    verdaderos++;
+                }
+            }
+            while (!Gano())
+            {
+
+                if (verdaderos<=4)
+                {
+                    int[] posMenor = new int[verdaderos];
+                    for (int f = 0; f <= verdaderos - 1; f++)
+                    {
+                        for (int y = 0; y <= ArrImagen.length - 1; y++)
+                        {
+                            if (ArrImagen[y] && YaEsta(posMenor, y))
+                            {
+                                posMenor[f] = y;
+                                y = ArrImagen.length - 1;
+                            }
+                        }
+                    }
+
+                    for (int u = 0; u <= verdaderos - 1; u++)
+                    {
+                        InvertirCostados(posMenor[u]);
+                    }
+
                 }
                 else
                 {
-                    posTrues.add(i);
-                }
-            }
+                    int[] posMenor = new int[9 - verdaderos];
+                    for (int f = 0; f <= 8 - verdaderos; f++)
+                    {
+                        for (int y = 0; y <= ArrImagen.length - 1; y++)
+                        {
+                            if (ArrImagen[y] == false)
+                            {
+                                posMenor[f] = y;
+                                y = ArrImagen.length - 1;
+                            }
+                        }
+                    }
 
-            if (posFalses.size() > posTrues.size())
-            {
-                for (int i = 0; i <= posTrues.size(); i++)
-                {
-                    InvertirCostados(i);
+                    for (int u = 0; u <= verdaderos - 1; u++)
+                    {
+                        InvertirCostados(posMenor[u]);
+                    }
                 }
             }
-            else
-            {
-                for (int i = 0; i <= posFalses.size(); i++)
-                {
-                    InvertirCostados(i);
-                }
-            }
-
-        }
+        Log.d("GanaPorMi", "Ganasteameo");
     }
+
 
 
     public void randomizar()
