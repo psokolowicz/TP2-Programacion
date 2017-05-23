@@ -16,9 +16,12 @@ public class ActividadPrincipal extends AppCompatActivity {
     EditText txtCaptcha;
     int num1;
     int num2;
+	
+	
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) 
+	{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.actividad_principal);
 
@@ -37,6 +40,13 @@ public class ActividadPrincipal extends AppCompatActivity {
         String hint = "¿" + num1 + " + " + num2 + "?";
         txtCaptcha.setHint(hint);
     }
+	
+	public boolean checkeaCaptcha(int res)
+    {
+        if (res == (num1 + num2) )
+			return true;
+		return false;
+    }
 
 
     public void Juego(View vista)
@@ -46,19 +56,22 @@ public class ActividadPrincipal extends AppCompatActivity {
 
         int Suma = Integer.parseInt(txtCaptcha.getText().toString().trim());
 
-        if(Suma != (num1+num2))
+        if(!checkeaCaptcha(Suma))
         {
             generarCaptcha();
+            txtCaptcha.setText("");
             Toast.makeText(this, "Vuelva a poner un captcha por favor, gracias, los queremos", Toast.LENGTH_LONG).show();
         }
-
-        //Vamos a la actividad del punto 2 sin mandar ningun dato
-        Intent ActividadDestino;
-        ActividadDestino= new Intent(ActividadPrincipal.this,ActividadJuego.class);
-        Log.d("ActPrin", "Antes de actividad");
-        startActivity(ActividadDestino);
-        //No creo que llegue
-        Log.d("ActPrin", "despues de actividad");
+		else
+		{
+			//Vamos a la actividad del punto 2 sin mandar ningun dato
+			Intent ActividadDestino;
+			ActividadDestino= new Intent(ActividadPrincipal.this,ActividadJuego.class);
+			Log.d("ActPrin", "Antes de actividad");
+			startActivity(ActividadDestino);
+			//No creo que llegue
+			Log.d("ActPrin", "despues de actividad");
+		}
     }
 
 }

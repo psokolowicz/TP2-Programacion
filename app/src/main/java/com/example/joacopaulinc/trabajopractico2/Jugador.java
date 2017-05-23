@@ -6,9 +6,11 @@ package com.example.joacopaulinc.trabajopractico2;
 
 public class Jugador
 {
-    public String Nombre;
-    public int Partidas;
-    public int Record;
+    public static String Nombre;
+    public static int Partidas;
+    public static int Record;
+	
+	
 
     public Jugador(String nombre, int partidas, int record) {
         Nombre = nombre;

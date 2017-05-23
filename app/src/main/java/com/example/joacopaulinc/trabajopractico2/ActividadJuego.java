@@ -16,7 +16,8 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ActividadJuego extends AppCompatActivity {
+public class ActividadJuego extends AppCompatActivity
+{
 
     ImageButton[] ArrBotones;
     Boolean[] ArrImagen;
@@ -27,7 +28,8 @@ public class ActividadJuego extends AppCompatActivity {
     int falses;
     int[] posMenor;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         Log.d("ActJue", "");
         Log.d("ActJue", "A punto de agregar el contenido");
 
@@ -134,36 +136,14 @@ public class ActividadJuego extends AppCompatActivity {
                         }
                     }
 
+                    int PosicionMenorArray=posMenor.length;
 
-                    final int PosicionMenorArray=posMenor.length;
-
-
-                    final Timer MiReloj;
-                    MiReloj = new Timer();
-
-                    for (int u = 0; u <= PosicionMenorArray - 1; u++) {
-
-                        final int pos = posMenor[u];
-
-                        TimerTask MiTareaARepetir;
-                        MiTareaARepetir = new TimerTask() {
-                            @Override
-                            public void run() {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-
-                                        {
-                                            InvertirCostados(pos);
-                                        }
-                                    }
-                                });
-                            }
-                        };
-
-                        MiReloj.schedule(MiTareaARepetir, 0, 1500);
-
+                    for (int u = 0; u <= PosicionMenorArray - 1; u++)
+                    {
+                        int pos = posMenor[u];
+                        InvertirCostados(pos);
                     }
+
                     verdaderos = 0;
                     for(int i = 0; i <= ArrImagen.length-1; i++)
                     {
