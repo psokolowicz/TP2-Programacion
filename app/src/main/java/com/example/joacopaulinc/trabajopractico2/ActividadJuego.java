@@ -644,7 +644,7 @@ public class ActividadJuego extends AppCompatActivity
                     InvertirImageButton(5, false);
                 }
 
-
+//
                 if (ArrImagen[7])
                 {
                     InvertirImageButton(7, true);
