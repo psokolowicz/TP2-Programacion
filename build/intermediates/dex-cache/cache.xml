@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="C:\Users\Joaquin\.android\build-cache\a63215dc29299ce92e14ef708a0554eb5fa9bf2d\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="a0b5d60246cd9d4f3f2443611b3b4c25265840b5">
+        <dex dex="E:\TP3-Programacion\app\build\intermediates\pre-dexed\debug\classes_c3c06178cf1a99691e665d26fa4a754dd946185f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Joaquin\.android\build-cache\d3c25fc6a173f492a32e75163ff2b72770b0bdb1\output\jars\libs\internal_impl-23.3.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="4da5a4d697d32497c6f85567a5112e62fdfd0676">
+        <dex dex="E:\TP3-Programacion\app\build\intermediates\pre-dexed\debug\internal_impl-23.3.0_aacbca72d51b1efe60756ba97801379e9aa879eb.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Joaquin\.android\build-cache\d145cdf92796e132cd8e41b216c24b676bd5d2f2\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="1b8e03daaa43fb0a4cd57e378167c2fd70454c1e">
+        <dex dex="E:\TP3-Programacion\app\build\intermediates\pre-dexed\debug\classes_cbf6a521058a9f9c84f1bb804973c66f19b1a43c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Joaquin\.android\build-cache\d3c25fc6a173f492a32e75163ff2b72770b0bdb1\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="8a034dd16c0dfd75fe86c52c2cd581592acc684a">
+        <dex dex="E:\TP3-Programacion\app\build\intermediates\pre-dexed\debug\classes_805fd05123bbd2758a4b1d69ce04cc30ca45a576.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Joaquin\.android\build-cache\7a9edd5868c08682935041ad4f42565125b3f2d6\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="23be6993826b8fd88bbc8d14928bb3b8960d3d4e">
+        <dex dex="E:\TP3-Programacion\app\build\intermediates\pre-dexed\debug\classes_6b553a4a231b4a89af6ba4f345ba50ae69128e94.jar" />
+    </item>
+
+</items>

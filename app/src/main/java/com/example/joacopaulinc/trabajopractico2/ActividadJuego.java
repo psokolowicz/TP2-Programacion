@@ -1,20 +1,13 @@
 package com.example.joacopaulinc.trabajopractico2;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.app.WindowDecorActionBar;
-import android.text.BoringLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class ActividadJuego extends AppCompatActivity
 {
@@ -38,7 +31,8 @@ public class ActividadJuego extends AppCompatActivity
 
         Log.d("ActJue", "Despues de agregar el contenido");
 
-
+        Bundle obtieneExtras = new Bundle();
+        obtieneExtras = getExtras();
         //Instanciamos los arreys
         ArrBotones = new ImageButton[9];
         ArrImagen = new Boolean[9];

@@ -40,6 +40,10 @@ public class ActividadPrincipal extends AppCompatActivity {
         num1 = random.nextInt(10);
         num2 = random.nextInt(10);
 
+        if (num1 == 0 || num2 == 0)
+            //Recurcion baby
+            generarCaptcha();
+
         String hint = "¿" + num1 + " + " + num2 + "?";
         txtCaptcha.setHint(hint);
     }
@@ -82,9 +86,15 @@ public class ActividadPrincipal extends AppCompatActivity {
                     if (baseDeDatosAbierta())
                     {
                         if (exiteJugador(Jugador))
+                        {
                             sumarPartida(Jugador);
+                        }
                         else
+                        {
                             guardaJugador(Jugador);
+                        }
+
+                        database.close();
                     }
                 }
                 catch (Exception e)
@@ -92,9 +102,13 @@ public class ActividadPrincipal extends AppCompatActivity {
                     Toast.makeText(this, "Error, pasese a constru", Toast.LENGTH_SHORT);
                 }
 
+                Bundle paqueteJugador = new Bundle();
+                paqueteJugador.putString("nombreJugador", Jugador);
+
                 //Vamos a la actividad del punto 2 sin mandar ningun dato
                 Intent ActividadDestino;
                 ActividadDestino= new Intent(ActividadPrincipal.this,ActividadJuego.class);
+                ActividadDestino.putExtras(paqueteJugador);
                 Log.d("ActPrin", "Antes de actividad");
                 startActivity(ActividadDestino);
                 //No creo que llegue
@@ -114,14 +128,13 @@ public class ActividadPrincipal extends AppCompatActivity {
 
         database.insert("jugadores", null, nuevoRegistro);
 
-        database.close();
     }
 
 
     public boolean exiteJugador(String nombrePlayer)
     {
         Cursor conjuntoDeRegistros;
-        conjuntoDeRegistros = database.rawQuery("select mensaje from mensajeria;", null);
+        conjuntoDeRegistros = database.rawQuery("select nombre from jugadores;", null);
         String nombreJugadorActual = "";
         if (conjuntoDeRegistros.moveToFirst() == true)
         {
@@ -129,27 +142,25 @@ public class ActividadPrincipal extends AppCompatActivity {
             {
                 nombreJugadorActual = conjuntoDeRegistros.getString(0);
                 if (nombreJugadorActual.equals(nombrePlayer))
-                    database.close();
                     return true;
             }
             while (conjuntoDeRegistros.moveToNext() == true);
 
         }
 
-        database.close();
         return false;
     }
 
     private void sumarPartida(String nombrePlayer)
     {
         Cursor conjuntoDeRegistros;
-        conjuntoDeRegistros = database.rawQuery("select partidas from jugadores WHERE nombre = " + nombrePlayer + ";" , null);
+        conjuntoDeRegistros = database.rawQuery("select partidas from jugadores WHERE nombre = '" + nombrePlayer + "';" , null);
         int partidasActual = 0;
         if (conjuntoDeRegistros.moveToFirst() == true)
         {
             do
             {
-                partidasActual = conjuntoDeRegistros.getInt(1);
+                partidasActual = conjuntoDeRegistros.getInt(0);
 
             }
             while (conjuntoDeRegistros.moveToNext() == true);
@@ -163,15 +174,14 @@ public class ActividadPrincipal extends AppCompatActivity {
 
         nuevoRegistro.put("partidas", partidasActual);
 
-        database.update("jugadores", nuevoRegistro, "nombre = " + nombrePlayer, null);
-        database.close();
+        database.update("jugadores", nuevoRegistro, "nombre = '" + nombrePlayer + "'", null);
 
     }
 
     public Boolean baseDeDatosAbierta()
     {
         Boolean respuesta;
-        DBaccess = new SQLite(this, "dbMensajeria", null, 1);
+        DBaccess = new SQLite(this, "jugadores", null, 1);
         database = DBaccess.getWritableDatabase();
 
         if (database != null)
