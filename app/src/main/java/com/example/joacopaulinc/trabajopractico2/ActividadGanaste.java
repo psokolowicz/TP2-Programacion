@@ -100,9 +100,8 @@ public class ActividadGanaste extends AppCompatActivity {
 
     private void borrarHistorial (String nombrePlayer)
     {
-        Cursor conjuntoDeRegistros;
-        conjuntoDeRegistros = database.rawQuery("delete from jugadores WHERE nombre = '" + nombrePlayer + "';" , null);
-
+        database.delete("judadores", "nombre = " + nombrePlayer, null);
+        VolverAHome(null);
     }
 
 }

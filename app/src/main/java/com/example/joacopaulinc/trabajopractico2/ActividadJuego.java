@@ -1,11 +1,14 @@
 package com.example.joacopaulinc.trabajopractico2;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import java.util.Random;
 
@@ -27,6 +30,8 @@ public class ActividadJuego extends AppCompatActivity
 
     boolean ganaPorMi = false;
     int cantMovimientos;
+    private SQLite DBaccess;
+    SQLiteDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -72,6 +77,20 @@ public class ActividadJuego extends AppCompatActivity
         Log.d("ActJue", "Despues de randomizar las imagenes");
 
 
+    }
+
+    public Boolean baseDeDatosAbierta()
+    {
+        Boolean respuesta;
+        DBaccess = new SQLite(this, "jugadores", null, 1);
+        database = DBaccess.getWritableDatabase();
+
+        if (database != null)
+            respuesta = true;
+        else
+            respuesta = false;
+
+        return respuesta;
     }
 
     public boolean YaEsta(int[] Array, int pos)
@@ -234,35 +253,54 @@ public class ActividadJuego extends AppCompatActivity
         {
             if(!ganaPorMi)
             {
-                if(movimientosActuales >= record)
+                if (baseDeDatosAbierta())
                 {
-                    Bundle PaqueteDeDatos;
-                    PaqueteDeDatos = new Bundle();
-                    PaqueteDeDatos.putString("Cual imagen", fotoGanadora);
-                    PaqueteDeDatos.putInt("nuevoRecord", movimientosActuales);
-                    PaqueteDeDatos.putInt("partidas", cantPartidas);
-                    PaqueteDeDatos.putString("nombre", nombreJugador);
+                    if(movimientosActuales <= record)
+                    {
+                        Bundle PaqueteDeDatos;
+                        PaqueteDeDatos = new Bundle();
+                        PaqueteDeDatos.putString("Cual imagen", fotoGanadora);
+                        //Base de datos
+                        PaqueteDeDatos.putInt("nuevoRecord", movimientosActuales);
 
-                    Intent ActividadDestino;
-                    ActividadDestino = new Intent(ActividadJuego.this, ActividadGanaste.class);
-                    ActividadDestino.putExtras(PaqueteDeDatos);
 
-                    startActivity(ActividadDestino);
+                        ContentValues nuevoRegistro;
+                        nuevoRegistro = new ContentValues();
+
+                        nuevoRegistro.put("record", movimientosActuales);
+
+                        database.update("jugadores", nuevoRegistro, "nombre = '" + nombreJugador + "';", null);
+
+
+                        PaqueteDeDatos.putInt("partidas", cantPartidas);
+                        PaqueteDeDatos.putString("nombre", nombreJugador);
+
+                        Intent ActividadDestino;
+                        ActividadDestino = new Intent(ActividadJuego.this, ActividadGanaste.class);
+                        ActividadDestino.putExtras(PaqueteDeDatos);
+
+                        startActivity(ActividadDestino);
+                    }
+                    else
+                    {
+                        Bundle PaqueteDeDatos;
+                        PaqueteDeDatos = new Bundle();
+                        PaqueteDeDatos.putInt("record", record);
+                        PaqueteDeDatos.putInt("partidas", cantPartidas);
+                        PaqueteDeDatos.putInt("movimientosActuales", movimientosActuales);
+                        PaqueteDeDatos.putString("nombre", nombreJugador);
+
+                        Intent ActividadDestino;
+                        ActividadDestino = new Intent(ActividadJuego.this, ActividadPerdiste.class);
+                        ActividadDestino.putExtras(PaqueteDeDatos);
+
+                        startActivity(ActividadDestino);
+                    }
+
                 }
                 else
                 {
-                    Bundle PaqueteDeDatos;
-                    PaqueteDeDatos = new Bundle();
-                    PaqueteDeDatos.putInt("record", record);
-                    PaqueteDeDatos.putInt("partidas", cantPartidas);
-                    PaqueteDeDatos.putInt("movimientosActuales", movimientosActuales);
-                    PaqueteDeDatos.putString("nombre", nombreJugador);
-
-                    Intent ActividadDestino;
-                    ActividadDestino = new Intent(ActividadJuego.this, ActividadPerdiste.class);
-                    ActividadDestino.putExtras(PaqueteDeDatos);
-
-                    startActivity(ActividadDestino);
+                    Toast.makeText(this, "error en la base de datos, los programadores en noruega son nerdicos", Toast.LENGTH_SHORT).show();
                 }
             }
             else

@@ -1,12 +1,18 @@
 package com.example.joacopaulinc.trabajopractico2;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ActividadPerdiste extends AppCompatActivity {
+
+    private SQLite DBaccess;
+    private SQLiteDatabase database;
+    String nombre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +25,7 @@ public class ActividadPerdiste extends AppCompatActivity {
         int Record = PaqueteDeDatosRecibidos.getInt("record");
         int partidas = PaqueteDeDatosRecibidos.getInt("partidas");
         int movimientosActuales = PaqueteDeDatosRecibidos.getInt("movimientosActuales");
-        String nombre = PaqueteDeDatosRecibidos.getString("nombre");
+        nombre = PaqueteDeDatosRecibidos.getString("nombre");
 
         TextView record = (TextView) findViewById(R.id.record);
         record.setText("Tu record es: " + record + " movimientos");
@@ -37,5 +43,43 @@ public class ActividadPerdiste extends AppCompatActivity {
         Intent ActividadDestino;
         ActividadDestino= new Intent(ActividadPerdiste.this,ActividadPrincipal.class);
         startActivity(ActividadDestino);
+    }
+
+    public void BorrarHistorial(View vista)
+    {
+        try
+        {
+            if (baseDeDatosAbierta())
+            {
+                borrarHistorial(nombre);
+
+                database.close();
+            }
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(this, "Error, pasese a constru", Toast.LENGTH_SHORT);
+        }
+    }
+
+    public Boolean baseDeDatosAbierta()
+    {
+        Boolean respuesta;
+        DBaccess = new SQLite(this, "jugadores", null, 1);
+        database = DBaccess.getWritableDatabase();
+
+        if (database != null)
+            respuesta = true;
+        else
+            respuesta = false;
+
+        return respuesta;
+    }
+
+    private void borrarHistorial (String nombrePlayer)
+    {
+        database.delete("judadores", "nombre = " + nombrePlayer, null);
+        VolverAHome(null);
+
     }
 }

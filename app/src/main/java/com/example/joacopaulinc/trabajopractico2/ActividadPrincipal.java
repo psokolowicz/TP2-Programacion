@@ -132,6 +132,7 @@ public class ActividadPrincipal extends AppCompatActivity {
 
         nuevoRegistro.put("nombre", nombre);
         nuevoRegistro.put("partidas", 1);
+        nuevoRegistro.put("record", 2147483647);
 
         database.insert("jugadores", null, nuevoRegistro);
 
@@ -208,18 +209,18 @@ public class ActividadPrincipal extends AppCompatActivity {
     {
         Cursor conjuntoDeRegistros;
         conjuntoDeRegistros = database.rawQuery("select record from jugadores WHERE nombre = '" + nombrePlayer + "';" , null);
-        int record = 0;
+        int recordEste = 0;
         if (conjuntoDeRegistros.moveToFirst() == true)
         {
             do
             {
-                record = conjuntoDeRegistros.getInt(1);
+                recordEste = conjuntoDeRegistros.getInt(0);
 
             }
             while (conjuntoDeRegistros.moveToNext() == true);
 
         }
-        return record;
+        return recordEste;
 
     }
 
